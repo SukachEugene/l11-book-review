@@ -13,20 +13,19 @@
 
 <div class="filter-container mb-4 flex">
     @php
-        $filters = [
-            '' => 'Latest',
-            'popular_last_month' => 'Popular Last Month',
-            'popular_last_6months' => 'Popular Last 6 Month',
-            'highest_rated_last_month' => 'Highest Rated Last Month',
-            'highest_rated_last_6months' => 'Highest Rated Last 6 Months'
-        ];
+    $filters = [
+    '' => 'Latest',
+    'popular_last_month' => 'Popular Last Month',
+    'popular_last_6months' => 'Popular Last 6 Month',
+    'highest_rated_last_month' => 'Highest Rated Last Month',
+    'highest_rated_last_6months' => 'Highest Rated Last 6 Months'
+    ];
     @endphp
 
     @foreach ($filters as $key => $label)
-        <a href="{{ route('books.index', [...request()->query(), 'filter' => $key]) }}" 
-        class="{{ request('filter') === $key || (request('filter') === null && $key === '') ? 'filter-item-active' : 'filter-item' }}">
-            {{ $label }}
-        </a>
+    <a href="{{ route('books.index', [...request()->query(), 'filter' => $key]) }}" class="{{ request('filter') === $key || (request('filter') === null && $key === '') ? 'filter-item-active' : 'filter-item' }}">
+        {{ $label }}
+    </a>
     @endforeach
 </div>
 
@@ -59,5 +58,11 @@
     </li>
     @endforelse
 </ul>
+
+@if ($books->count())
+    <nav class="mt-4">
+        {{ $books->appends(['filter' => request('filter'), 'title' => request('title')])->links() }}
+    </nav>
+@endif
 
 @endsection
