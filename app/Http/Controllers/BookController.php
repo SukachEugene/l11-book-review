@@ -31,7 +31,7 @@ class BookController extends Controller
             // default => $books->withCount('reviews')->withAvg('reviews', 'rating')->latest()
         };
 
-        $books->paginate(10);
+        $books = $books->paginate(10);
         $cacheKey = 'books:' . $filter . ':' . $title . ':' . $page;
         $books = cache()->remember($cacheKey, 3600, fn () => $books);
 
